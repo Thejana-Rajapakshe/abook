@@ -1,4 +1,4 @@
-use scraper::{self, ElementRef};
+use scraper::{self};
 use crate::book::Book;
 
 pub struct Parser {
@@ -11,13 +11,6 @@ impl Parser{
     pub fn new(html: String) -> Self{
         let document = scraper::Html::parse_document(&html);
         Parser { document, books: vec![] }
-    }
-
-    pub fn print_book_titles(self) {
-        let selector = scraper::Selector::parse("a[title][id]").unwrap();
-        for (line_number, element) in self.document.select(&selector).enumerate() {
-            println!("{}: {}", line_number + 1, super::Parser::get_parent_content(&element));
-        }
     }
 
     pub fn get_books(mut self){
@@ -62,18 +55,8 @@ impl Parser{
         for (line_number, book) in self.books.iter().enumerate(){
             println!("----------BOOK {}----------", (line_number+1));
             book.print();
+            println!();
         } 
     }
 
-    fn get_parent_content( a_element: &scraper::ElementRef) -> String {
-        let mut content = String::new();
-    
-        for child_node in a_element.children() {
-            if let scraper::Node::Text(text) = child_node.value() {
-                content.push_str(text);
-            }
-        }
-    
-        content.trim().to_owned()
-    }
 }

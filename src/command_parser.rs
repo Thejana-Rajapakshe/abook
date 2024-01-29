@@ -17,7 +17,7 @@ pub fn parse_commands() -> String {
         .arg(
             Arg::new("amount")
                 .short('a',)
-                .long("--amount")
+                .long("amount")
                 .help("specify the number of books you need to fetch NOTE: this could only be 25, 50, 75 or 100")
         )
 
